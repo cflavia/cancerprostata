@@ -10,5 +10,4 @@ streamlit
 pandas
 numpy
 shutil
-collections
 click==8
