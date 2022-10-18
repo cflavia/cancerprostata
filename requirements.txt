@@ -6,3 +6,5 @@ imblearn
 tensorflow
 keras
 matplotlib
+streamlit
+pandas
