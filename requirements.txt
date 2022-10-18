@@ -9,4 +9,5 @@ matplotlib
 streamlit
 pandas
 numpy
-
+shutil
+collections
