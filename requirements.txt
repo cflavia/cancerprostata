@@ -2,4 +2,5 @@ scikit-learn
 seaborn
 shap
 lime
+imblearn
 
