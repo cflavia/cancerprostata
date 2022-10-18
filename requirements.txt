@@ -8,6 +8,6 @@ streamlit
 pandas
 numpy
 os
-matplotlib.pyplot
-imblearn.over_sampling
+matplotlib
+imblearn
 keras
