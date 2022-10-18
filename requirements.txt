@@ -8,3 +8,5 @@ keras
 matplotlib
 streamlit
 pandas
+numpy
+os
