@@ -3,11 +3,3 @@ seaborn
 shap
 lime
 shutil
-collections
-streamlit
-pandas
-numpy
-os
-matplotlib
-imblearn
-keras
