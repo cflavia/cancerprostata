@@ -22,7 +22,7 @@ except ModuleNotFoundError:
             except ModuleNotFoundError:
                 # Streamlit > ~1.12
                 from streamlit.runtime.scriptrunner.script_run_context import get_script_run_ctx as get_report_ctx
-pip install scikit-learn
+!pip install scikit-learn
 import sklearn
 import pandas as pd
 import numpy as np
