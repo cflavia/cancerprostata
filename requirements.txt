@@ -3,4 +3,5 @@ seaborn
 shap
 lime
 imblearn
+tensorflow
 keras
