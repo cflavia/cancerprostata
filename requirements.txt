@@ -9,5 +9,4 @@ matplotlib
 streamlit
 pandas
 numpy
-shutil
 click==8
