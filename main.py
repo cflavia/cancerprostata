@@ -264,6 +264,7 @@ if __name__ == '__main__':
             )
             exp.as_pyplot_figure()
             exp.show_in_notebook()
+            st.set_option('deprecation.showPyplotGlobalUse', False)
             st.pyplot()
             if (accuracy_score(y_test, gb.predict(X_test)) > 70):
                 st.write("We can see that the prediction was successful, with a result:")
@@ -294,6 +295,7 @@ if __name__ == '__main__':
             )
             exp.as_pyplot_figure()
             exp.show_in_notebook()
+            st.set_option('deprecation.showPyplotGlobalUse', False)
             st.pyplot()
             if (accuracy_score(y_test, rf.predict(X_test)) > 70):
                 st.write("We can see that the prediction was successful, with a result:")
