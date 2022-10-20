@@ -169,7 +169,7 @@ if __name__ == '__main__':
             st.write('Blue color indicates that x value decreased the prediction and red color indicates that y value increased the prediction.')
             st.write("If we can se, we get grey colored points for categorical data as the integer encoded values can not be always used to arrange it from low to high.")
             shap_values = shap.TreeExplainer(model).shap_values(X_train)
-            shap.summary_plot(shap_values, X_select, plot_type="dot")
+            shap.summary_plot(shap_values, X_select, plot_type="dot", show = False)
             st.pyplot()
 
 #             svm = sklearn.svm.SVC(kernel='rbf', probability=True)
