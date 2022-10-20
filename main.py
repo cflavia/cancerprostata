@@ -171,7 +171,7 @@ if __name__ == '__main__':
             model = RandomForestRegressor()
             model.fit(X_train, y_train)
             shap_values = shap.TreeExplainer(model).shap_values(X_train)
-            shap.summary_plot(shap_values, X_select)
+            shap.summary_plot(shap_values, X_select, plot_type="bar")
             st.pyplot()
 
 #             svm = sklearn.svm.SVC(kernel='rbf', probability=True)
