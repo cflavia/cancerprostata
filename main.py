@@ -240,8 +240,8 @@ if __name__ == '__main__':
                 data_row=X_test.iloc[0],
                 predict_fn=clf.predict_proba
             )
+            st.set_option('deprecation.showPyplotGlobalUse', False)
             exp.as_pyplot_figure()
-            #exp.show_in_notebook()
             st.pyplot()
             if (accuracy_score(y_test, clf.predict(X_test)) > 70):
                 st.write("We can see that the prediction was successful, with a result:")
@@ -264,7 +264,6 @@ if __name__ == '__main__':
             )
             exp.as_pyplot_figure()
             exp.show_in_notebook()
-            st.set_option('deprecation.showPyplotGlobalUse', False)
             st.pyplot()
             if (accuracy_score(y_test, gb.predict(X_test)) > 70):
                 st.write("We can see that the prediction was successful, with a result:")
