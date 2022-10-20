@@ -179,7 +179,7 @@ if __name__ == '__main__':
             st.write(X_test.iloc[0,:])
 
             y_shap = LabelEncoder().fit_transform(y)
-            oversample = SMOTE()
+            oversample = SMOTE(random_state=42)
             X_select_shap, y_shap = oversample.fit_resample(X_select, y)
             counter = Counter(y_shap)
             X_train_1, X_test_1, y_train_1, y_test_1 = train_test_split(X_select_shap, y_shap, test_size=test_size_choose,
