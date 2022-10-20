@@ -193,7 +193,7 @@ if __name__ == '__main__':
             st.pyplot()
 
             shap.summary_plot(shap_values, X_select_shap)
-            st.pyplot(plt)
+            st.pyplot()
 
 #             svm = sklearn.svm.SVC(kernel='rbf', probability=True)
 #             svm.fit(X_train_1, y_train_1)
