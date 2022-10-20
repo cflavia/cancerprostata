@@ -121,16 +121,16 @@ if __name__ == '__main__':
     data = data.dropna()
 
     if (choose_option == "None"):
-#         #dataset
-#         st.title('Cancerul de prostata')
-#         st.write('Setului de date analizat si utilizat in predictia cancerului de prostata')
-#         #print dataset
-#         st.write(data)
+        #dataset
+        st.title('Cancerul de prostata')
+        st.write('Setului de date analizat si utilizat in predictia cancerului de prostata')
+        #print dataset
+        st.write(data)
 
         #prezent statistic of EXHP
         fig, ax = plt.subplots(figsize=(8, 4))
-        plt = sns.countplot(data['EXHP'], label="Count")
-        st.set_option('deprecation.showPyplotGlobalUse', False)
+        plt = sns.countplot(data=data, x=data['EXHP'], label="Count")
+#         st.set_option('deprecation.showPyplotGlobalUse', False)
         st.write("Numarul de pacienti care sufera de cancer de prostata")
         st.pyplot(fig)
 
