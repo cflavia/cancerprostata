@@ -9,6 +9,7 @@ import seaborn as sns
 import os
 import matplotlib.pyplot as plt
 from imblearn.over_sampling import SMOTE
+from imblearn.combine import SMOTEENN
 from sklearn.multiclass import OneVsRestClassifier
 from sklearn.svm import LinearSVC, SVC
 from sklearn.decomposition import PCA
@@ -179,7 +180,7 @@ if __name__ == '__main__':
             st.write(X_test.iloc[0,:])
 
             y_shap = LabelEncoder().fit_transform(y)
-            oversample = SMOTE(random_state=42)
+            oversample = SMOTEENN()
             X_select_shap, y_shap = oversample.fit_resample(X_select, y)
             counter = Counter(y_shap)
             X_train_1, X_test_1, y_train_1, y_test_1 = train_test_split(X_select_shap, y_shap, test_size=test_size_choose,
