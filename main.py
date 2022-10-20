@@ -163,8 +163,8 @@ if __name__ == '__main__':
             model = RandomForestRegressor()
             model.fit(X_train, y_train)
             shap_values = shap.TreeExplainer(model).shap_values(X_train)
-            plt = shap.summary_plot(shap_values, X_train, plot_type="bar")
-            st.pyplot(plt=plt)
+            shap.summary_plot(shap_values, X_train, plot_type="bar")
+            st.pyplot()
 
 #             st.write('Blue color indicates that x value decreased the prediction and red color indicates that y value increased the prediction.')
 #             st.write("If we can se, we get grey colored points for categorical data as the integer encoded values can not be always used to arrange it from low to high.")
