@@ -241,7 +241,7 @@ if __name__ == '__main__':
                 predict_fn=clf.predict_proba
             )
             exp.as_pyplot_figure()
-            exp.show_in_notebook()
+            #exp.show_in_notebook()
             st.pyplot()
             if (accuracy_score(y_test, clf.predict(X_test)) > 70):
                 st.write("We can see that the prediction was successful, with a result:")
