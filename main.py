@@ -192,8 +192,8 @@ if __name__ == '__main__':
             shap.summary_plot(shap_values, X_train_1, plot_type="bar")
             st.pyplot()
 
-            shap.summary_plot(shap_values, X_select_shap)
-            st.pyplot()
+            #shap.summary_plot(shap_values, X_select_shap)
+            #st.pyplot()
 
 #             svm = sklearn.svm.SVC(kernel='rbf', probability=True)
 #             svm.fit(X_train_1, y_train_1)
