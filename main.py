@@ -112,7 +112,7 @@ def plot_subfigure(X, Y, subplot, title, transform):
 
 
 if __name__ == '__main__':
-    values = ["None", "Shap", "Lime", "Multi-class Classification"]
+    values = ["None", "Shap", "Lime", "BMI Calculator"]
     choose_option = st.sidebar.selectbox(
         "Choose a option",
         values, index = values.index("None")
@@ -368,170 +368,56 @@ if __name__ == '__main__':
             st.write("Train  Accuracy : %.2f" % accuracy_score(y_train, lr.predict(X_train)))
 
 
-    if (choose_option == 'Multi-class Classification'):
-        st.title('Multi-class Classification')
-        st.subheader('=  a classification task with more than two classes')
-        data = data.sample(frac=1).reset_index(drop=True)
-        Y = data['EXHP']
-        X = data.drop(['EXHP'], axis=1)
-
-        y = LabelEncoder().fit_transform(y)
-
-        fig, ax = plt.subplots(figsize=(8, 4))
-        counter = Counter(y)
-        for k, v in counter.items():
-            per = v / len(y) * 100
-            print('Class=%d, n=%d (%.3f%%)' % (k, v, per))
-        plt.bar(counter.keys(), counter.values())
-        plt.show()
-        st.pyplot(fig)
-
-        y = LabelEncoder().fit_transform(y)
-        oversample = SMOTE()
-        X, y = oversample.fit_resample(X, y)
-        counter = Counter(y)
-        for k, v in counter.items():
-            per = v / len(y) * 100
-            print('Class=%d, n=%d (%.3f%%)' % (k, v, per))
-        plt.bar(counter.keys(), counter.values())
-        plt.show()
-        st.pyplot(plt=plt)
-
-        svc = SVC()
-        o_vs_r = OneVsRestClassifier(svc)
-        o_vs_r.fit(X, y)
-        y_pred = o_vs_r.predict(X)
-        plt.plot(y_pred, X, 'ro')
-        plt.plot(y, X, 'yo')
-        st.pyplot(plt=plt)
-        st.write("Accuracy for prediction:", sklearn.metrics.accuracy_score(y, y_pred))
-        st.write("Precision for prediction:", sklearn.metrics.precision_score(y, y_pred))
-
-        data = data.sample(frac=1).reset_index(drop=True)
-        Y = data['EXHP']
-        X = data.drop(['EXHP'], axis=1)
-        encoder = OneHotEncoder()
-        encoded_Y = encoder.fit(Y.values.reshape(-1, 1))
-        encoded_Y = encoded_Y.transform(Y.values.reshape(-1, 1)).toarray()
-        train_ratio = 0.70
-        validation_ratio = 0.15
-        test_ratio = 0.15
-
-        trainX, testX, trainY, testY = train_test_split(X, encoded_Y, test_size=1 - train_ratio)
-        valX, testX, valY, testY = train_test_split(testX, testY,
-                                                    test_size=test_ratio / (test_ratio + validation_ratio))
-
-        re_transformed_array_trainY = encoder.inverse_transform(trainY)
-        unique_elements, counts_elements = np.unique(re_transformed_array_trainY, return_counts=True)
-        unique_elements_and_counts_trainY = pd.DataFrame(np.asarray((unique_elements, counts_elements)).T)
-        unique_elements_and_counts_trainY.columns = ['unique_elements', 'count']
-
-        re_transformed_array_valY = encoder.inverse_transform(valY)
-        unique_elements, counts_elements = np.unique(re_transformed_array_valY, return_counts=True)
-        unique_elements_and_counts_valY = pd.DataFrame(np.asarray((unique_elements, counts_elements)).T)
-        unique_elements_and_counts_valY.columns = ['unique_elements', 'count']
-
-        re_transformed_array_trainY = encoder.inverse_transform(trainY)
-        unique_elements, counts_elements = np.unique(re_transformed_array_trainY, return_counts=True)
-        unique_elements_and_counts_trainY = pd.DataFrame(np.asarray((unique_elements, counts_elements)).T)
-        unique_elements_and_counts_trainY.columns = ['unique_elements', 'count']
-        st.write(unique_elements_and_counts_trainY)
-
-        re_transformed_array_testY = encoder.inverse_transform(testY)
-        unique_elements, counts_elements = np.unique(re_transformed_array_testY, return_counts=True)
-        unique_elements_and_counts_testY = pd.DataFrame(np.asarray((unique_elements, counts_elements)).T)
-        unique_elements_and_counts_testY.columns = ['unique_elements', 'count']
-        y_part = [trainY, valY, testY]
-        for y_part in y_part:
-            re_transformed_array = encoder.inverse_transform(y_part)
-            unique_elements, counts_elements = np.unique(re_transformed_array, return_counts=True)
-            unique_elements_and_counts = pd.DataFrame(np.asarray((unique_elements, counts_elements)).T)
-            unique_elements_and_counts.columns = ['unique_elements', 'count']
-        list_trainY = unique_elements_and_counts_trainY['unique_elements'].to_list()
-        list_valY = unique_elements_and_counts_valY['unique_elements'].to_list()
-        list_testY = unique_elements_and_counts_testY['unique_elements'].to_list()
-        input_shape = trainX.shape[1]
-        n_batch_size = 20
-        n_steps_per_epoch = int(trainX.shape[0] / n_batch_size)
-        n_validation_steps = int(valX.shape[0] / n_batch_size)
-        n_test_steps = int(testX.shape[0] / n_batch_size)
-        n_epochs = 25
-        num_classes = trainY.shape[1]
-        st.write('Input Shape: ' + str(input_shape))
-        st.write('Dataset Size: ' + str(n_batch_size))
-        st.write('Number of Classes: ' + str(num_classes))
-
-        model = models.Sequential()
-        model.add(layers.Dense(64, activation='relu', input_shape=(input_shape,)))
-        model.add(layers.Dense(64, activation='relu'))
-        model.add(layers.Dense(num_classes, activation='softmax'))
-        model.compile(loss='categorical_crossentropy',
-                      optimizer='adam',
-                      metrics=['accuracy'])
-        checkpoint_no = 'model_pred'
-        model_name = 'Bird_ANN_2FC_F64_64_epoch_25'
-        checkpoint_dir = './' + checkpoint_no
-        if not os.path.exists(checkpoint_dir):
-            os.makedirs(checkpoint_dir)
-        keras_callbacks = [ModelCheckpoint(filepath=checkpoint_dir + '/' + model_name,
-                                           monitor='val_loss', save_best_only=True, mode='auto')]
-        trainX = trainX.astype('int')
-        trainY = trainY.astype('int')
-        testX = testX.astype('int')
-        testY = testY.astype('int')
-        valX = valX.astype('int')
-        valY = valY.astype('int')
-        history = model.fit(trainX,
-                            trainY,
-                            steps_per_epoch=n_steps_per_epoch,
-                            epochs=n_epochs,
-                            batch_size=n_batch_size,
-                            validation_data=(valX, valY),
-                            validation_steps=n_validation_steps,
-                            callbacks=[keras_callbacks])
-        hist_df = pd.DataFrame(history.history)
-        hist_df['epoch'] = hist_df.index + 1
-        cols = list(hist_df.columns)
-        cols = [cols[-1]] + cols[:-1]
-        hist_df = hist_df[cols]
-        hist_df.to_csv(checkpoint_no + '/' + 'history_df_' + model_name + '.csv')
-        values_of_best_model = hist_df[hist_df.val_loss == hist_df.val_loss.min()]
-
-        class_assignment = dict(zip(y, encoded_Y))
-        df_temp = pd.DataFrame([class_assignment], columns=class_assignment.keys())
-        df_temp = df_temp.stack()
-        df_temp = pd.DataFrame(df_temp).reset_index().drop(['level_0'], axis=1)
-        df_temp.columns = ['Category', 'Allocated Number']
-        df_temp.to_csv(checkpoint_no + '/' + 'class_assignment_df_' + model_name + '.csv')
-        acc = history.history['accuracy']
-        val_acc = history.history['val_accuracy']
-        loss = history.history['loss']
-        val_loss = history.history['val_loss']
-        epochs = range(1, len(acc) + 1)
-        plt.plot(epochs, acc, 'bo', label='Training acc')
-        plt.plot(epochs, val_acc, 'b', label='Validation acc')
-        plt.title('Training and validation accuracy')
-        plt.legend()
-        plt.figure()
-        plt.plot(epochs, loss, 'bo', label='Training loss')
-        plt.plot(epochs, val_loss, 'b', label='Validation loss')
-        plt.title('Training and validation loss')
-        plt.legend()
-        plt.show()
-        st.pyplot()
-
-        model_reloaded = load_model(checkpoint_no + '/' + model_name)
-        root_directory = os.getcwd()
-        checkpoint_dir = os.path.join(root_directory, checkpoint_no)
-        model_name_temp = os.path.join(checkpoint_dir, model_name + '.h5')
-        model_reloaded.save(model_name_temp)
-        folder_name_temp = os.path.join(checkpoint_dir, model_name)
-        shutil.rmtree(folder_name_temp, ignore_errors=True)
-
-        best_model = load_model(model_name_temp)
-        test_loss, test_acc = best_model.evaluate(testX,
-                                                  testY,
-                                                  steps=n_test_steps)
-        st.write('Test Accuracy for model:', test_acc)
-        y_pred = model.predict(testX)
-        st.write('Train Accuracy for model: ', acc[0])
+    if (choose_option == 'BMI Calculator'):
+        st.title('BMI Calculator')
+        st.subheader('=  Body Mass Index')
+        st.write("<div style='text-align: justify;font-size: 16px;'><br><br>Pentru calculul Indicelui de Masă Corporală se utilizează următoarea formulă:<br><br></div>",unsafe_allow_html=True)
+        st.write(r"$$\color{orange}BMI=\frac{greutate}{înălțime^2}$$")
+        col1, col2 = st.beta_columns(2)
+        greutate = col1.text_input("Greutate (kg)", 50)
+        inaltime = col2.text_input("Înălțime (m)",1.6)
+        btn_calc=st.button("Calculează")
+        if (',' in greutate):
+          greutate= greutate.split(',')[0] + '.' + greutate.split(',')[1]
+        if(' 'in greutate):
+          greutate = greutate.split(' ')[0] + greutate.split(' ')[1]
+        if (',' in inaltime):
+          inaltime= inaltime.split(',')[0] + '.' + inaltime.split(',')[1]
+        if (' ' in inaltime):
+          inaltime = inaltime.split(' ')[0] + inaltime.split(' ')[1]
+        try:
+          float(greutate)
+          float(inaltime)
+        except ValueError:
+          st.write("Vă rugăm să introduceți date valide.")
+        if(btn_calc and float(greutate)>0.0 and float(inaltime)>0.0):
+          if (',' in greutate):
+            intreg=greutate.split(',')[0]+'.'+greutate.split(',')[1]
+            rezultatBMI=float(greutate)/((float(inaltime))*(float(inaltime)))
+            st.write("<div style='text-align: justify;font-size: 16px; color: orange'><br><b>Rezultat:</b></div>",unsafe_allow_html=True)
+            st.write("BMI-ul dumneavoastră este: % .2f." %(rezultatBMI))
+          if(float(rezultatBMI)<18.5):
+            st.write("\n* **Subponderal**"
+                 "\n* Un risc ridicat de sănătate, dacă nu alegi o dietă sănătoasă, bogată în nutrienţi.")
+          if (float(rezultatBMI) >= 18.5 and float(rezultatBMI) < 25):
+            st.write("\n* **Greutate normală** - aveți o greutate perfectă.")
+          if (float(rezultatBMI) >= 25 and float(rezultatBMI) <30):
+            st.write("\n* **Supraponderal** - aveți o greutate moderată.")
+          if (float(rezultatBMI) >= 30 and float(rezultatBMI) <35):
+            st.write("\n* **Obezitate (gradul I)** - recomandare: să eliminați dulciurile şi alimentele nesănătoase din alimentație.")
+          if (float(rezultatBMI) >= 35and float(rezultatBMI) <40):
+            st.write("\n* **Obezitate (gradul II)** - greutatea vă afectează sănătatea.")
+          if (float(rezultatBMI) >=40):
+            st.write("\n* **Obezitate morbidă** - greutatea vă afectează grav sănătatea.")
+        st.image("resources/bmi-categories.jpeg")
+        st.write("<div  style='font-size: 12px;text-align: center'>Sursă imagine: <a href='https://www.bodycureclinic.fit/images/bmi.jpeg'>https://www.bodycureclinic.fit/images/bmi.jpeg</a></div><br>", unsafe_allow_html=True)
+        st.write("\nCreșterea greutății corporale crește riscul apariției unor probleme de sănătate, cum ar fi:"
+             "\n* bolile cardiovasculare;"
+             "\n* insuficiența cardiacă;"
+             "\n* hipertensiunea arterială;"
+             "\n* infarctul miocardic;"
+             "\n* accidentul vascular cerebral;"
+             "\n* afecțiunile articulațiilor;"
+             "\n* unele **tipuri de diabet**;"
+             "\n* unele tipuri de cancer.")
+        
