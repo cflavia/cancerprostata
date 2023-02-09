@@ -124,6 +124,10 @@ if __name__ == '__main__':
     if (choose_option == "None"):
         #dataset
         st.title('Cancerul de prostata')
+        st.write("Cancerul de prostată este o formă de cancer care se dezvoltă în prostată, o glandă aflată la intersecția aparatului urinar cu cel genital la bărbați. Mare majoritate a cancerelor de prostată se dezvoltă lent, cu toate acestea, există cazuri în care cancerul de prostată se dezvoltă în mod agresiv.")
+        st.write("Cancerul de prostată tinde să se dezvolte la bărbații cu vârsta de peste cincizeci de ani și, deși este una dintre cele mai răspândite tipuri de cancer la bărbați mulți nu au simptome, nu se tratează, și în cele din urmă mor din alte cauze. Acest lucru este din cauza faptului că cancerul de prostată este, în majoritatea cazurilor, cu dezvoltare lentă, asimptomatică și oamenii în vârstă adesea vor muri din cauze care nu au legătură cu cancerul de prostată, cum ar fi inimă / boli circulatorii, pneumonie , alte tipuri de cancer care nu au legătură cu prostata, sau din cauza vârstei înaintate. Pe de altă parte, cazurile de cancer de prostată mai agresive reprezintă cauza pentru mai multe decese legate de cancer în rândul bărbaților din Statele Unite, decât orice alt cancer, cu excepția cancerului pulmonar. Aproximativ două treimi din cazurile de cancer de prostată sunt cu dezvoltare lentă, iar o treime cu dezvoltare mai agresivă și mai rapidă.")
+        st.write(" ")
+        st.write("Pentru predictia cancerului de prostata am utilizat un set de date, care cuprinde date de la pacienti reali")
         st.write('Setului de date analizat si utilizat in predictia cancerului de prostata')
         #print dataset
         st.write(data)
