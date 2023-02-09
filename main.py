@@ -113,6 +113,7 @@ def plot_subfigure(X, Y, subplot, title, transform):
 
 if __name__ == '__main__':
     values = ["None", "Shap", "Lime", "BMI Calculator"]
+    st.set_option('deprecation.showPyplotGlobalUse', False)
     choose_option = st.sidebar.selectbox(
         "Choose a option",
         values, index = values.index("None")
