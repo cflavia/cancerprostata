@@ -373,7 +373,7 @@ if __name__ == '__main__':
         st.subheader('=  Body Mass Index')
         st.write("<div style='text-align: justify;font-size: 16px;'><br><br>Pentru calculul Indicelui de Masă Corporală se utilizează următoarea formulă:<br><br></div>",unsafe_allow_html=True)
         st.write(r"$$\color{orange}BMI=\frac{greutate}{înălțime^2}$$")
-        col1, col2 = st.beta_columns(2)
+        col1, col2 = st.columns(2)
         greutate = col1.text_input("Greutate (kg)", 50)
         inaltime = col2.text_input("Înălțime (m)",1.6)
         btn_calc=st.button("Calculează")
@@ -409,8 +409,8 @@ if __name__ == '__main__':
             st.write("\n* **Obezitate (gradul II)** - greutatea vă afectează sănătatea.")
           if (float(rezultatBMI) >=40):
             st.write("\n* **Obezitate morbidă** - greutatea vă afectează grav sănătatea.")
-        st.image("resources/bmi-categories.jpeg")
-        st.write("<div  style='font-size: 12px;text-align: center'>Sursă imagine: <a href='https://www.bodycureclinic.fit/images/bmi.jpeg'>https://www.bodycureclinic.fit/images/bmi.jpeg</a></div><br>", unsafe_allow_html=True)
+        #st.image("resources/bmi-categories.jpeg")
+        #st.write("<div  style='font-size: 12px;text-align: center'>Sursă imagine: <a href='https://www.bodycureclinic.fit/images/bmi.jpeg'>https://www.bodycureclinic.fit/images/bmi.jpeg</a></div><br>", unsafe_allow_html=True)
         st.write("\nCreșterea greutății corporale crește riscul apariției unor probleme de sănătate, cum ar fi:"
              "\n* bolile cardiovasculare;"
              "\n* insuficiența cardiacă;"
