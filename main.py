@@ -393,9 +393,9 @@ if __name__ == '__main__':
         if(btn_calc and float(greutate)>0.0 and float(inaltime)>0.0):
           if (',' in greutate):
             intreg=greutate.split(',')[0]+'.'+greutate.split(',')[1]
-            rezultatBMI=float(greutate)/((float(inaltime))*(float(inaltime)))
-            st.write("<div style='text-align: justify;font-size: 16px; color: orange'><br><b>Rezultat:</b></div>",unsafe_allow_html=True)
-            st.write("BMI-ul dumneavoastră este: % .2f." %(rezultatBMI))
+          rezultatBMI=float(greutate)/((float(inaltime))*(float(inaltime)))
+          st.write("<div style='text-align: justify;font-size: 16px; color: orange'><br><b>Rezultat:</b></div>",unsafe_allow_html=True)
+          st.write("BMI-ul dumneavoastră este: % .2f." %(rezultatBMI))
           if(float(rezultatBMI)<18.5):
             st.write("\n* **Subponderal**"
                  "\n* Un risc ridicat de sănătate, dacă nu alegi o dietă sănătoasă, bogată în nutrienţi.")
